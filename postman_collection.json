@@ -195,7 +195,7 @@
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "http://localhost:3000/api",
+			"value": "https://backend-login-two.vercel.app/api",
 			"type": "string"
 		}
 	]
