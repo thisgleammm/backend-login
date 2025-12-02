@@ -170,6 +170,137 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Parking Areas",
+			"item": [
+				{
+					"name": "List Parking Areas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/parking-areas",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"parking-areas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Parking Area Detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/parking-areas/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"parking-areas",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Parking Area",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Parkir Gedung A\",\n    \"location\": \"Lantai 1, Gedung A\",\n    \"type\": \"Motor\",\n    \"capacity\": 100,\n    \"available\": 45,\n    \"price\": \"Rp 2.000/jam\",\n    \"latitude\": -6.2088,\n    \"longitude\": 106.8456,\n    \"operatingHours\": \"24 Jam\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/parking-areas",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"parking-areas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Parking Area",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Parkir Gedung A Updated\",\n    \"location\": \"Lantai 2, Gedung A\",\n    \"type\": \"Mobil\",\n    \"capacity\": 150,\n    \"available\": 80,\n    \"price\": \"Rp 3.000/jam\",\n    \"latitude\": -6.2088,\n    \"longitude\": 106.8456,\n    \"operatingHours\": \"07:00 - 22:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/parking-areas/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"parking-areas",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Parking Area",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/parking-areas/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"parking-areas",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [

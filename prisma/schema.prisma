@@ -15,3 +15,16 @@ model User {
   email    String @unique
   password String
 }
+
+model ParkingArea {
+  id              Int    @id @default(autoincrement())
+  name            String
+  location        String
+  type            String
+  capacity        Int
+  available       Int
+  price           String
+  latitude        Float
+  longitude       Float
+  operatingHours  String
+}
