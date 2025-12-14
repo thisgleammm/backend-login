@@ -28,3 +28,15 @@ model ParkingArea {
   longitude       Float
   operatingHours  String
 }
+
+model Item {
+  id              Int      @id @default(autoincrement())
+  qrCode          String   @unique
+  name            String
+  description     String?
+  quantity        Int      @default(1)
+  storageLocation String
+  imageUrl        String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

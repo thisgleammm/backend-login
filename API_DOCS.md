@@ -265,3 +265,158 @@ Delete a parking area.
   { "message": "Parking area deleted successfully" }
   ```
 
+## Items (QR Code)
+
+### List Items
+Get a list of all items with optional search and location filter.
+
+- **URL**: `/items`
+- **Method**: `GET`
+- **Query Parameters**:
+  - `search` (optional): Search by name, description, or qrCode
+  - `location` (optional): Filter by storage location
+- **Success Response** (200 OK):
+  ```json
+  [
+    {
+      "id": 1,
+      "qrCode": "ITEM-001-LAPTOP",
+      "name": "Laptop Asus ROG Strix",
+      "description": "Gaming laptop dengan RTX 4060",
+      "quantity": 3,
+      "storageLocation": "Gudang A, Rak 1, Slot A1",
+      "imageUrl": null,
+      "createdAt": "2024-12-14T04:30:00.000Z",
+      "updatedAt": "2024-12-14T04:30:00.000Z"
+    }
+  ]
+  ```
+
+### Create Item
+Create a new item with QR code.
+
+- **URL**: `/items`
+- **Method**: `POST`
+- **Body** (JSON):
+  ```json
+  {
+    "qrCode": "ITEM-001-LAPTOP",
+    "name": "Laptop Asus ROG Strix",
+    "description": "Gaming laptop dengan RTX 4060",
+    "quantity": 3,
+    "storageLocation": "Gudang A, Rak 1, Slot A1",
+    "imageUrl": "https://example.com/image.jpg"
+  }
+  ```
+- **Success Response** (201 Created):
+  ```json
+  {
+    "id": 1,
+    "qrCode": "ITEM-001-LAPTOP",
+    "name": "Laptop Asus ROG Strix",
+    "description": "Gaming laptop dengan RTX 4060",
+    "quantity": 3,
+    "storageLocation": "Gudang A, Rak 1, Slot A1",
+    "imageUrl": "https://example.com/image.jpg",
+    "createdAt": "2024-12-14T04:30:00.000Z",
+    "updatedAt": "2024-12-14T04:30:00.000Z"
+  }
+  ```
+- **Error Response** (409 Conflict):
+  ```json
+  { "message": "Item dengan QR Code tersebut sudah ada" }
+  ```
+
+### Get Item Detail
+Get details of a specific item by ID.
+
+- **URL**: `/items/:id`
+- **Method**: `GET`
+- **Success Response** (200 OK):
+  ```json
+  {
+    "id": 1,
+    "qrCode": "ITEM-001-LAPTOP",
+    "name": "Laptop Asus ROG Strix",
+    "description": "Gaming laptop dengan RTX 4060",
+    "quantity": 3,
+    "storageLocation": "Gudang A, Rak 1, Slot A1",
+    "imageUrl": null,
+    "createdAt": "2024-12-14T04:30:00.000Z",
+    "updatedAt": "2024-12-14T04:30:00.000Z"
+  }
+  ```
+- **Error Response** (404 Not Found):
+  ```json
+  { "message": "Item tidak ditemukan" }
+  ```
+
+### Scan QR Code
+Search for an item by scanning its QR code. This is the main endpoint for mobile app QR scanning.
+
+- **URL**: `/items/scan/:code`
+- **Method**: `GET`
+- **Success Response** (200 OK):
+  ```json
+  {
+    "found": true,
+    "item": {
+      "id": 1,
+      "qrCode": "ITEM-001-LAPTOP",
+      "name": "Laptop Asus ROG Strix",
+      "description": "Gaming laptop dengan RTX 4060",
+      "quantity": 3,
+      "storageLocation": "Gudang A, Rak 1, Slot A1",
+      "imageUrl": null,
+      "createdAt": "2024-12-14T04:30:00.000Z",
+      "updatedAt": "2024-12-14T04:30:00.000Z"
+    },
+    "message": "Item ditemukan di Gudang A, Rak 1, Slot A1"
+  }
+  ```
+- **Error Response** (404 Not Found):
+  ```json
+  {
+    "found": false,
+    "item": null,
+    "message": "Item dengan QR Code tersebut tidak ditemukan"
+  }
+  ```
+
+### Update Item
+Update an item's information including storage location.
+
+- **URL**: `/items/:id`
+- **Method**: `PUT`
+- **Body** (JSON):
+  ```json
+  {
+    "name": "Laptop Asus ROG Strix G16",
+    "storageLocation": "Gudang B, Rak 1, Slot A1",
+    "quantity": 5
+  }
+  ```
+- **Success Response** (200 OK):
+  ```json
+  {
+    "id": 1,
+    "qrCode": "ITEM-001-LAPTOP",
+    "name": "Laptop Asus ROG Strix G16",
+    "description": "Gaming laptop dengan RTX 4060",
+    "quantity": 5,
+    "storageLocation": "Gudang B, Rak 1, Slot A1",
+    "imageUrl": null,
+    "createdAt": "2024-12-14T04:30:00.000Z",
+    "updatedAt": "2024-12-14T05:00:00.000Z"
+  }
+  ```
+
+### Delete Item
+Delete an item.
+
+- **URL**: `/items/:id`
+- **Method**: `DELETE`
+- **Success Response** (200 OK):
+  ```json
+  { "message": "Item berhasil dihapus" }
+  ```
