@@ -16,17 +16,19 @@ List semua items dengan fitur search dan filter lokasi.
 ---
 
 ### `POST /api/items`
-Buat item baru dengan QR Code.
+Buat item baru dengan QR Code. **Otomatis generate gambar QR Code** dan upload ke Vercel Blob Storage.
 
 **Required Fields:**
-- `qrCode` - Kode unik untuk QR Code
 - `name` - Nama barang
 - `storageLocation` - Lokasi penyimpanan
 
 **Optional Fields:**
+- `qrCode` - Kode unik untuk QR Code (auto-generate jika tidak dikirim, format: `ITEM-{timestamp}-{randomId}`)
 - `description` - Deskripsi barang
 - `quantity` - Jumlah (default: 1)
-- `imageUrl` - URL gambar
+- `imageUrl` - URL gambar produk
+
+**Response:** Item dengan field `qrImageUrl` berisi URL gambar QR code.
 
 **File:** `app/api/items/route.ts`
 

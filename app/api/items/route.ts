@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import {
+  generateQRCodeString,
+  createAndUploadQRCode,
+} from "@/lib/qr-generator";
 
 // GET /api/items - List semua items dengan search
 export async function GET(request: Request) {
@@ -40,24 +44,27 @@ export async function GET(request: Request) {
   }
 }
 
-// POST /api/items - Create item baru
+// POST /api/items - Create item baru dengan auto-generate QR Code
 export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { qrCode, name, description, quantity, storageLocation, imageUrl } =
       body;
 
-    // Validasi required fields
-    if (!qrCode || !name || !storageLocation) {
+    // Validasi required fields (qrCode sekarang opsional)
+    if (!name || !storageLocation) {
       return NextResponse.json(
-        { message: "qrCode, name, dan storageLocation wajib diisi" },
+        { message: "name dan storageLocation wajib diisi" },
         { status: 400 },
       );
     }
 
+    // Generate qrCode jika tidak dikirim
+    const finalQrCode = qrCode || generateQRCodeString();
+
     // Cek apakah qrCode sudah ada
     const existingItem = await prisma.item.findUnique({
-      where: { qrCode },
+      where: { qrCode: finalQrCode },
     });
 
     if (existingItem) {
@@ -67,9 +74,19 @@ export async function POST(request: Request) {
       );
     }
 
+    // Generate dan upload gambar QR ke Vercel Blob
+    let qrImageUrl: string | null = null;
+    try {
+      qrImageUrl = await createAndUploadQRCode(finalQrCode);
+    } catch (qrError) {
+      console.error("Error generating QR image:", qrError);
+      // Lanjutkan tanpa QR image jika gagal
+    }
+
     const item = await prisma.item.create({
       data: {
-        qrCode,
+        qrCode: finalQrCode,
+        qrImageUrl,
         name,
         description: description || null,
         quantity: quantity || 1,
